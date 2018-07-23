@@ -34,7 +34,7 @@ Partial Class passForm
         Me.Label1.Location = New System.Drawing.Point(12, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(141, 12)
-        Me.Label1.TabIndex = 0
+        Me.Label1.TabIndex = 3
         Me.Label1.Text = "パスワードを入力して下さい。"
         '
         'okBtn
@@ -60,7 +60,7 @@ Partial Class passForm
         Me.passBox.Location = New System.Drawing.Point(14, 81)
         Me.passBox.Name = "passBox"
         Me.passBox.Size = New System.Drawing.Size(317, 19)
-        Me.passBox.TabIndex = 3
+        Me.passBox.TabIndex = 0
         '
         'passForm
         '

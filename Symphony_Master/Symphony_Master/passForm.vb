@@ -6,11 +6,11 @@
         Me.MinimizeBox = False
         Me.MaximizeBox = False
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+        Me.KeyPreview = True
     End Sub
 
     Private Sub cancelBtn_Click(sender As System.Object, e As System.EventArgs) Handles cancelBtn.Click
         Me.Close()
-        Me.Owner.Close()
     End Sub
 
     Private Sub okBtn_Click(sender As System.Object, e As System.EventArgs) Handles okBtn.Click
@@ -21,11 +21,18 @@
             Me.Close()
         Else
             Me.Close()
-            Me.Owner.Close()
+        End If
+    End Sub
+
+    Private Sub passForm_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If e.Control = False Then
+                Me.SelectNextControl(Me.ActiveControl, Not e.Shift, True, True, True)
+            End If
         End If
     End Sub
 
     Private Sub passForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        passBox.Focus()
+        Me.ActiveControl = passBox
     End Sub
 End Class

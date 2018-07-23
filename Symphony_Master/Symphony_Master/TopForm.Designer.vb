@@ -60,13 +60,14 @@ Partial Class TopForm
         '
         'exitBtn
         '
+        Me.exitBtn.BackColor = System.Drawing.SystemColors.GradientActiveCaption
         Me.exitBtn.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.exitBtn.Location = New System.Drawing.Point(137, 98)
         Me.exitBtn.Name = "exitBtn"
         Me.exitBtn.Size = New System.Drawing.Size(121, 75)
         Me.exitBtn.TabIndex = 3
         Me.exitBtn.Text = "終　了"
-        Me.exitBtn.UseVisualStyleBackColor = True
+        Me.exitBtn.UseVisualStyleBackColor = False
         '
         'TopForm
         '
