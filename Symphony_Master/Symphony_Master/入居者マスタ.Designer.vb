@@ -75,28 +75,28 @@ Partial Class 入居者マスタ
         Me.idBox.Location = New System.Drawing.Point(75, 14)
         Me.idBox.Name = "idBox"
         Me.idBox.Size = New System.Drawing.Size(65, 19)
-        Me.idBox.TabIndex = 6
+        Me.idBox.TabIndex = 0
         '
         'firstnameBox
         '
         Me.firstnameBox.Location = New System.Drawing.Point(200, 49)
         Me.firstnameBox.Name = "firstnameBox"
         Me.firstnameBox.Size = New System.Drawing.Size(65, 19)
-        Me.firstnameBox.TabIndex = 1
+        Me.firstnameBox.TabIndex = 2
         '
         'lastnameBox
         '
         Me.lastnameBox.Location = New System.Drawing.Point(97, 49)
         Me.lastnameBox.Name = "lastnameBox"
         Me.lastnameBox.Size = New System.Drawing.Size(65, 19)
-        Me.lastnameBox.TabIndex = 0
+        Me.lastnameBox.TabIndex = 1
         '
         'kanaBox
         '
         Me.kanaBox.Location = New System.Drawing.Point(75, 79)
         Me.kanaBox.Name = "kanaBox"
         Me.kanaBox.Size = New System.Drawing.Size(190, 19)
-        Me.kanaBox.TabIndex = 2
+        Me.kanaBox.TabIndex = 3
         '
         'unitBox
         '
@@ -104,7 +104,7 @@ Partial Class 入居者マスタ
         Me.unitBox.Location = New System.Drawing.Point(75, 109)
         Me.unitBox.Name = "unitBox"
         Me.unitBox.Size = New System.Drawing.Size(55, 20)
-        Me.unitBox.TabIndex = 3
+        Me.unitBox.TabIndex = 4
         '
         'displayCheckBox
         '
@@ -151,7 +151,7 @@ Partial Class 入居者マスタ
         Me.Label5.Location = New System.Drawing.Point(44, 17)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(16, 12)
-        Me.Label5.TabIndex = 5
+        Me.Label5.TabIndex = 6
         Me.Label5.Text = "ID"
         '
         'Label6
@@ -186,7 +186,7 @@ Partial Class 入居者マスタ
         Me.btnRegist.Location = New System.Drawing.Point(315, 55)
         Me.btnRegist.Name = "btnRegist"
         Me.btnRegist.Size = New System.Drawing.Size(62, 27)
-        Me.btnRegist.TabIndex = 4
+        Me.btnRegist.TabIndex = 5
         Me.btnRegist.Text = "登　録"
         Me.btnRegist.UseVisualStyleBackColor = True
         '

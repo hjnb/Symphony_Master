@@ -56,19 +56,21 @@ Public Class 入居者マスタ
     End Sub
 
     Private Sub displayResident()
+        clearInputText()
         dgvResident.DataSource = Nothing
         Dim cnn As New ADODB.Connection
         Dim rs As New ADODB.Recordset
         Dim sql As String = "select Id, Nam, Sei, Mei, Kana, Unit, Dsp from UsrM order by Kana"
         cnn.Open(TopForm.DB_MASTER)
-        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockPessimistic)
+        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockReadOnly)
         Dim da As OleDbDataAdapter = New OleDbDataAdapter()
         Dim ds As DataSet = New DataSet()
         da.Fill(ds, rs, "UsrM")
         dgvResident.DataSource = ds.Tables(0)
 
         settingDgvResidentColumn()
-        dgvResident.CurrentCell.Selected = False
+        dgvResident.CurrentRow.Selected = False
+        idBox.Focus()
     End Sub
 
     Private Sub settingDgvResident()
@@ -144,7 +146,7 @@ Public Class 入居者マスタ
 
     Private Sub settingTextBox()
         'ID
-        idBox.ReadOnly = True
+        idBox.ImeMode = Windows.Forms.ImeMode.Disable
         idBox.ForeColor = Color.Blue
         idBox.BackColor = Color.FromKnownColor(KnownColor.Control)
         idBox.TextAlign = HorizontalAlignment.Center
@@ -156,7 +158,7 @@ Public Class 入居者マスタ
         firstnameBox.ImeMode = Windows.Forms.ImeMode.Hiragana
 
         'フリガナ
-        kanaBox.ImeMode = Windows.Forms.ImeMode.Hiragana
+        kanaBox.ImeMode = Windows.Forms.ImeMode.Katakana
 
         'ユニットボックス
         unitBox.Items.AddRange({"空", "星", "森", "花", "月", "海"})
@@ -164,6 +166,16 @@ Public Class 入居者マスタ
         '並び替えボックス
         sortBox.Items.AddRange({"ID", "フリガナ", "ユニット", "表示"})
 
+    End Sub
+
+    Private Sub clearInputText()
+        sortBox.Text = ""
+        idBox.Text = ""
+        lastnameBox.Text = ""
+        firstnameBox.Text = ""
+        kanaBox.Text = ""
+        unitBox.Text = ""
+        displayCheckBox.Checked = True
     End Sub
 
     Private Sub dgvResident_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvResident.CellFormatting
@@ -237,5 +249,92 @@ Public Class 入居者マスタ
         End If
         dgvResident.Sort(targetColumn, System.ComponentModel.ListSortDirection.Ascending)
         dgvResident.CurrentCell.Selected = False
+    End Sub
+
+    Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
+        If id = -1 Then
+            MsgBox("IDは1以上の数値で指定して下さい。")
+            Return
+        End If
+        Dim lastname As String = lastnameBox.Text '姓
+        If lastname = "" Then
+            MsgBox("漢字（姓）を入力して下さい。")
+            Return
+        End If
+        Dim firstname As String = firstnameBox.Text '名
+        If firstname = "" Then
+            MsgBox("漢字（名）を入力して下さい。")
+            Return
+        End If
+        Dim nam As String = lastname & " " & firstname '名前
+        Dim kana As String = kanaBox.Text 'フリガナ
+        If kana = "" Then
+            MsgBox("フリガナを入力して下さい。")
+            Return
+        End If
+        Dim unit As String = unitBox.Text
+        If unit = "" Then
+            MsgBox("ユニットを選択して下さい。")
+            Return
+        End If
+        Dim dsp As Integer = If(displayCheckBox.Checked, 1, 0) '表示
+
+        Dim cn As New ADODB.Connection()
+        cn.Open(TopForm.DB_MASTER)
+        Dim cmd As New ADODB.Command()
+        cmd.ActiveConnection = cn
+        Dim rs As New ADODB.Recordset
+        Dim sql As String
+        sql = "select id from UsrM where id = " & id
+        rs.Open(sql, cn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
+        If rs.RecordCount = 0 Then
+            '新規登録
+            cmd.CommandText = "insert into UsrM (Id, Nam, Kana, Unit, Dsp) values (?, ?, ?, ?, ?)"
+            cmd.Parameters.Refresh()
+            cmd.Execute(Parameters:={id, nam, kana, unit, dsp})
+            cn.Close()
+
+            '再表示
+            displayResident()
+        Else
+            '更新
+            Dim result As DialogResult = MessageBox.Show("既に登録されています。上書きしますか？", "登録", MessageBoxButtons.YesNo)
+            If result = Windows.Forms.DialogResult.Yes Then
+                cmd.CommandText = "update UsrM set Nam=?, Kana=?, Unit=?, Dsp=? where id=?"
+                cmd.Parameters.Refresh()
+                cmd.Execute(Parameters:={nam, kana, unit, dsp, id})
+                cn.Close()
+
+                '再表示
+                displayResident()
+            Else
+                cn.Close()
+            End If
+        End If
+
+    End Sub
+
+    Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
+        If id = -1 Then
+            MsgBox("対象者を選択して下さい。")
+            Return
+        End If
+
+        Dim result As DialogResult = MessageBox.Show("マスタから削除して宜しいですか？※非表示設定等で対応できる場合があります。", "削除", MessageBoxButtons.YesNoCancel)
+        If result = Windows.Forms.DialogResult.Yes Then
+            Dim cn As New ADODB.Connection()
+            cn.Open(TopForm.DB_MASTER)
+            Dim cmd As New ADODB.Command()
+            cmd.ActiveConnection = cn
+            cmd.CommandText = "delete from UsrM where id=?"
+            cmd.Parameters.Refresh()
+            cmd.Execute(Parameters:=id)
+            cn.Close()
+
+            '再表示
+            displayResident()
+        End If
     End Sub
 End Class
