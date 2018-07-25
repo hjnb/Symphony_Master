@@ -72,7 +72,7 @@ Partial Class passForm
         Me.Controls.Add(Me.okBtn)
         Me.Controls.Add(Me.Label1)
         Me.Name = "passForm"
-        Me.Text = "passForm"
+        Me.Text = "起動"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

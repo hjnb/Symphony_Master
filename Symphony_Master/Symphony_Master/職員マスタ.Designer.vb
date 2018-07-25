@@ -107,7 +107,7 @@ Partial Class 職員マスタ
         Me.btnRegist.Location = New System.Drawing.Point(558, 123)
         Me.btnRegist.Name = "btnRegist"
         Me.btnRegist.Size = New System.Drawing.Size(58, 29)
-        Me.btnRegist.TabIndex = 8
+        Me.btnRegist.TabIndex = 6
         Me.btnRegist.Text = "登　録"
         Me.btnRegist.UseVisualStyleBackColor = True
         '

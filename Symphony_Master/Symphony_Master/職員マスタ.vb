@@ -59,6 +59,7 @@ Public Class 職員マスタ
     Private Sub displayStaff()
         clearInputText()
         dgvStaff.DataSource = Nothing
+
         Dim cnn As New ADODB.Connection
         Dim rs As New ADODB.Recordset
         Dim sql As String = "select Id, Nam, Kana, Bush, Syok, Ryak, Zai, Dsp, Sei, Mei from StffM order by Kana"
@@ -285,6 +286,110 @@ Public Class 職員マスタ
                 TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter)
             '描画が完了したことを知らせる
             e.Handled = True
+        End If
+    End Sub
+
+    Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
+        If id = -1 Then
+            MsgBox("IDは1以上の数値で指定して下さい。")
+            idBox.Focus()
+            Return
+        End If
+        Dim lastname As String = lastnameBox.Text '姓
+        If lastname = "" Then
+            MsgBox("漢字（姓）を入力して下さい。")
+            lastnameBox.Focus()
+            Return
+        End If
+        Dim firstname As String = firstnameBox.Text '名
+        If firstname = "" Then
+            MsgBox("漢字（名）を入力して下さい。")
+            firstnameBox.Focus()
+            Return
+        End If
+        Dim nam As String = lastname & " " & firstname '名前
+        Dim kana As String = kanaBox.Text 'フリガナ
+        If kana = "" Then
+            MsgBox("フリガナを入力して下さい。")
+            kanaBox.Focus()
+            Return
+        End If
+        Dim office As String = officeNameBox.Text
+        If office = "" Then
+            MsgBox("事業所を選択して下さい。")
+            officeNameBox.Focus()
+            Return
+        End If
+        Dim job As String = jobBox.Text
+        If job = "" Then
+            MsgBox("職種を選択して下さい。")
+            jobBox.Focus()
+            Return
+        End If
+        Dim abbreviationName As String = If(lastnameCheckBox.Checked, "1", abbreviationNameBox.Text) '略名
+        If abbreviationName = "" Then
+            MsgBox("略名を入力して下さい。")
+            abbreviationNameBox.Focus()
+            Return
+        End If
+        Dim exist As Integer = If(existCheckBox.Checked, 1, 0) '在職
+        Dim dsp As Integer = If(displayCheckBox.Checked, 1, 0) '表示
+
+        Dim cn As New ADODB.Connection()
+        cn.Open(TopForm.DB_MASTER)
+        Dim cmd As New ADODB.Command()
+        cmd.ActiveConnection = cn
+        Dim rs As New ADODB.Recordset
+        Dim sql As String
+        sql = "select id from StffM where id = " & id
+        rs.Open(sql, cn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockReadOnly)
+        If rs.RecordCount = 0 Then
+            '新規登録
+            cmd.CommandText = "insert into StffM (Id, Nam, Kana, Bush, Syok, Ryak, Zai, Dsp, Sei, Mei) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            cmd.Parameters.Refresh()
+            cmd.Execute(Parameters:={id, nam, kana, office, job, abbreviationName, exist, dsp, lastname, firstname})
+            cn.Close()
+
+            '再表示
+            displayStaff()
+        Else
+            '更新
+            Dim result As DialogResult = MessageBox.Show("既に登録されています。上書きしますか？", "登録", MessageBoxButtons.YesNo)
+            If result = Windows.Forms.DialogResult.Yes Then
+                cmd.CommandText = "update StffM set Nam=?, Kana=?, Bush=?, Syok=?, Ryak=?, Zai=?, Dsp=?, Sei=?, Mei=? where id=?"
+                cmd.Parameters.Refresh()
+                cmd.Execute(Parameters:={nam, kana, office, job, abbreviationName, exist, dsp, lastname, firstname, id})
+                cn.Close()
+
+                '再表示
+                displayStaff()
+            Else
+                cn.Close()
+            End If
+        End If
+    End Sub
+
+    Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
+        If id = -1 Then
+            MsgBox("対象者を選択して下さい。")
+            Return
+        End If
+
+        Dim result As DialogResult = MessageBox.Show("削除して宜しいですか？", "削除", MessageBoxButtons.YesNoCancel)
+        If result = Windows.Forms.DialogResult.Yes Then
+            Dim cn As New ADODB.Connection()
+            cn.Open(TopForm.DB_MASTER)
+            Dim cmd As New ADODB.Command()
+            cmd.ActiveConnection = cn
+            cmd.CommandText = "delete from StffM where id=?"
+            cmd.Parameters.Refresh()
+            cmd.Execute(Parameters:=id)
+            cn.Close()
+
+            '再表示
+            displayStaff()
         End If
     End Sub
 End Class
