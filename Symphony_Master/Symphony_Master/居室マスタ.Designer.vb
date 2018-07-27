@@ -22,10 +22,13 @@ Partial Class 居室マスタ
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.dgvUser = New System.Windows.Forms.DataGridView()
         Me.btnRegist = New System.Windows.Forms.Button()
-        Me.BbtnClear = New System.Windows.Forms.Button()
-        Me.dgvRoom = New System.Windows.Forms.DataGridView()
+        Me.btnClear = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ymdLabel = New System.Windows.Forms.Label()
+        Me.dgvRoom = New Symphony_Master.ExDataGridView(Me.components)
         CType(Me.dgvUser, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvRoom, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -48,14 +51,31 @@ Partial Class 居室マスタ
         Me.btnRegist.Text = "登録"
         Me.btnRegist.UseVisualStyleBackColor = True
         '
-        'BbtnClear
+        'btnClear
         '
-        Me.BbtnClear.Location = New System.Drawing.Point(798, 340)
-        Me.BbtnClear.Name = "BbtnClear"
-        Me.BbtnClear.Size = New System.Drawing.Size(38, 33)
-        Me.BbtnClear.TabIndex = 2
-        Me.BbtnClear.Text = "クリア"
-        Me.BbtnClear.UseVisualStyleBackColor = True
+        Me.btnClear.Location = New System.Drawing.Point(798, 340)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(38, 33)
+        Me.btnClear.TabIndex = 2
+        Me.btnClear.Text = "クリア"
+        Me.btnClear.UseVisualStyleBackColor = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(603, 358)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(41, 12)
+        Me.Label1.TabIndex = 4
+        Me.Label1.Text = "更新日"
+        '
+        'ymdLabel
+        '
+        Me.ymdLabel.AutoSize = True
+        Me.ymdLabel.Location = New System.Drawing.Point(659, 358)
+        Me.ymdLabel.Name = "ymdLabel"
+        Me.ymdLabel.Size = New System.Drawing.Size(0, 12)
+        Me.ymdLabel.TabIndex = 5
         '
         'dgvRoom
         '
@@ -64,7 +84,7 @@ Partial Class 居室マスタ
         Me.dgvRoom.Name = "dgvRoom"
         Me.dgvRoom.RowTemplate.Height = 21
         Me.dgvRoom.Size = New System.Drawing.Size(713, 323)
-        Me.dgvRoom.TabIndex = 3
+        Me.dgvRoom.TabIndex = 6
         '
         '居室マスタ
         '
@@ -72,7 +92,9 @@ Partial Class 居室マスタ
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(852, 389)
         Me.Controls.Add(Me.dgvRoom)
-        Me.Controls.Add(Me.BbtnClear)
+        Me.Controls.Add(Me.ymdLabel)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.btnClear)
         Me.Controls.Add(Me.btnRegist)
         Me.Controls.Add(Me.dgvUser)
         Me.Name = "居室マスタ"
@@ -80,10 +102,13 @@ Partial Class 居室マスタ
         CType(Me.dgvUser, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvRoom, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents dgvUser As System.Windows.Forms.DataGridView
     Friend WithEvents btnRegist As System.Windows.Forms.Button
-    Friend WithEvents BbtnClear As System.Windows.Forms.Button
-    Friend WithEvents dgvRoom As System.Windows.Forms.DataGridView
+    Friend WithEvents btnClear As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents ymdLabel As System.Windows.Forms.Label
+    Friend WithEvents dgvRoom As Symphony_Master.ExDataGridView
 End Class
