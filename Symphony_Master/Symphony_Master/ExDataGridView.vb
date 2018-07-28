@@ -1,22 +1,25 @@
 ﻿Public Class ExDataGridView
     Inherits DataGridView
 
-    Private processFlg As Boolean = True
+    Private processFlg As Boolean = False
+
+    Private editTextBox As DataGridViewTextBoxEditingControl
 
     Protected Overrides Function ProcessKeyEventArgs(ByRef m As System.Windows.Forms.Message) As Boolean
-        If processFlg = False Then
-            processFlg = True
-            Return False
-        Else
-            processFlg = False
-            Dim code As Integer = CInt(m.WParam)
-            If code = Keys.Enter Then
-                Me.BeginEdit(False)
+        Dim code As Integer = CInt(m.WParam)
+        If code = Keys.Enter Then
+            If processFlg = False Then
+                processFlg = True
                 Return False
             Else
-                Return MyBase.ProcessKeyEventArgs(m)
+                processFlg = False
+                Me.BeginEdit(False)
+                Return False
             End If
+        Else
+            Return MyBase.ProcessKeyEventArgs(m)
         End If
+
     End Function
 
     Protected Overrides Function ProcessDataGridViewKey(e As System.Windows.Forms.KeyEventArgs) As Boolean
@@ -29,18 +32,19 @@
     End Function
 
     Private Sub ExDataGridView_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles Me.EditingControlShowing
-        Dim tb As DataGridViewTextBoxEditingControl = CType(e.Control, DataGridViewTextBoxEditingControl)
-        tb.ImeMode = Windows.Forms.ImeMode.Hiragana
+        editTextBox = CType(e.Control, DataGridViewTextBoxEditingControl)
+        editTextBox.ImeMode = Windows.Forms.ImeMode.Hiragana
 
         'イベントハンドラを削除、追加
-        RemoveHandler tb.PreviewKeyDown, AddressOf dataGridViewTextBox_PreviewKeyDown
-        AddHandler tb.PreviewKeyDown, AddressOf dataGridViewTextBox_PreviewKeyDown
+        RemoveHandler editTextBox.PreviewKeyDown, AddressOf dataGridViewTextBox_PreviewKeyDown
+        AddHandler editTextBox.PreviewKeyDown, AddressOf dataGridViewTextBox_PreviewKeyDown
 
     End Sub
 
     Private Sub dataGridViewTextBox_PreviewKeyDown(ByVal sender As Object, ByVal e As PreviewKeyDownEventArgs)
         If e.KeyCode = Keys.Enter Then
             Me.EndEdit()
+            processFlg = False
         End If
     End Sub
     
