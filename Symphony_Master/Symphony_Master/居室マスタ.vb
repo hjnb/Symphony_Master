@@ -41,7 +41,8 @@ Public Class 居室マスタ
     End Sub
 
     Private Sub 居室マスタ_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        'Me.Dispose()
+        dgvRoom.EndEdit()
+        Me.Dispose()
     End Sub
 
     Private Sub 居室マスタ_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -318,6 +319,7 @@ Public Class 居室マスタ
             ElseIf i Mod 3 = 2 Then
                 'ID行の設定
                 dgvRoom.Rows(i).DefaultCellStyle = idRowCellStyle
+                dgvRoom.Rows(i).ReadOnly = True
             End If
         Next
     End Sub
@@ -351,38 +353,86 @@ Public Class 居室マスタ
     End Sub
 
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
-        'レコードセットのデータ更新
         Dim cnn As New ADODB.Connection
         Dim rs As New ADODB.Recordset
         cnn.Open(TopForm.DB_MASTER)
         Dim sql As String = "select Gyo, Sora, Hosi, Mori, Tuki, Hana, Id1, Id2, Id3, Id4, Id5, Ymd from RmM order by Gyo"
-        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenForwardOnly, ADODB.LockTypeEnum.adLockPessimistic)
-        Dim ymd As String = Today.ToString("yyyy/MM/dd")
-        For i As Integer = 1 To 12
-            If i = 4 OrElse i = 9 Then
-                i += 1
-            End If
-            rs.Fields("Sora").Value = dtRoom.Rows(1).Item("R" & i)
-            rs.Fields("Id1").Value = If(Util.checkDBNullValue(dtRoom.Rows(2).Item("R" & i)) = "", 0, dtRoom.Rows(2).Item("R" & i))
-            rs.Fields("Mori").Value = dtRoom.Rows(4).Item("R" & i)
-            rs.Fields("Id2").Value = If(Util.checkDBNullValue(dtRoom.Rows(5).Item("R" & i)) = "", 0, dtRoom.Rows(5).Item("R" & i))
-            rs.Fields("Hosi").Value = dtRoom.Rows(7).Item("R" & i)
-            rs.Fields("Id3").Value = If(Util.checkDBNullValue(dtRoom.Rows(8).Item("R" & i)) = "", 0, dtRoom.Rows(8).Item("R" & i))
-            rs.Fields("Tuki").Value = dtRoom.Rows(10).Item("R" & i)
-            rs.Fields("Id4").Value = If(Util.checkDBNullValue(dtRoom.Rows(11).Item("R" & i)) = "", 0, dtRoom.Rows(11).Item("R" & i))
-            rs.Fields("Hana").Value = dtRoom.Rows(13).Item("R" & i)
-            rs.Fields("Id5").Value = If(Util.checkDBNullValue(dtRoom.Rows(14).Item("R" & i)) = "", 0, dtRoom.Rows(14).Item("R" & i))
-            rs.Fields("Ymd").Value = ymd
-            If i <> 12 Then
-                rs.MoveNext()
-            End If
-        Next
-        rs.Update()
-        cnn.Close()
+        rs.Open(sql, cnn, ADODB.CursorTypeEnum.adOpenKeyset, ADODB.LockTypeEnum.adLockPessimistic)
 
-        '再表示
-        clearText()
-        displayDgvRoom()
+        If rs.RecordCount <> 10 Then
+            '新規登録
+            Dim result As DialogResult = MessageBox.Show("新規登録してよろしいですか？", "登録", MessageBoxButtons.YesNo)
+            If result = Windows.Forms.DialogResult.Yes Then
+                'データを削除する
+                Dim cmd As New ADODB.Command()
+                cmd.ActiveConnection = cnn
+                cmd.CommandText = "delete from RmM"
+                cmd.Execute()
+
+                'レコードセットに追加、登録
+                Dim ymd As String = Today.ToString("yyyy/MM/dd")
+                Dim rowCount As Integer = 1
+                For i As Integer = 1 To 12
+                    If i = 4 OrElse i = 9 Then
+                        i += 1
+                    End If
+                    rs.AddNew()
+                    rs.Fields("Gyo").Value = rowCount
+                    rs.Fields("Sora").Value = dtRoom.Rows(1).Item("R" & i)
+                    rs.Fields("Id1").Value = If(Util.checkDBNullValue(dtRoom.Rows(1).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(2).Item("R" & i)) = "", 0, dtRoom.Rows(2).Item("R" & i)))
+                    rs.Fields("Mori").Value = dtRoom.Rows(4).Item("R" & i)
+                    rs.Fields("Id2").Value = If(Util.checkDBNullValue(dtRoom.Rows(4).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(5).Item("R" & i)) = "", 0, dtRoom.Rows(5).Item("R" & i)))
+                    rs.Fields("Hosi").Value = dtRoom.Rows(7).Item("R" & i)
+                    rs.Fields("Id3").Value = If(Util.checkDBNullValue(dtRoom.Rows(7).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(8).Item("R" & i)) = "", 0, dtRoom.Rows(8).Item("R" & i)))
+                    rs.Fields("Tuki").Value = dtRoom.Rows(10).Item("R" & i)
+                    rs.Fields("Id4").Value = If(Util.checkDBNullValue(dtRoom.Rows(10).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(11).Item("R" & i)) = "", 0, dtRoom.Rows(11).Item("R" & i)))
+                    rs.Fields("Hana").Value = dtRoom.Rows(13).Item("R" & i)
+                    rs.Fields("Id5").Value = If(Util.checkDBNullValue(dtRoom.Rows(13).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(14).Item("R" & i)) = "", 0, dtRoom.Rows(14).Item("R" & i)))
+                    rs.Fields("Ymd").Value = ymd
+                    If i <> 12 Then
+                        rs.MoveNext()
+                        rowCount += 1
+                    End If
+                Next
+                rs.Update()
+                cnn.Close()
+
+                '再表示
+                clearText()
+                displayDgvRoom()
+            End If
+        Else
+            Dim result As DialogResult = MessageBox.Show("既に登録されています。上書きしますか？", "登録", MessageBoxButtons.YesNo)
+            If result = Windows.Forms.DialogResult.Yes Then
+                'レコードセットのデータ更新
+                Dim ymd As String = Today.ToString("yyyy/MM/dd")
+                For i As Integer = 1 To 12
+                    If i = 4 OrElse i = 9 Then
+                        i += 1
+                    End If
+                    rs.Fields("Sora").Value = dtRoom.Rows(1).Item("R" & i)
+                    rs.Fields("Id1").Value = If(Util.checkDBNullValue(dtRoom.Rows(1).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(2).Item("R" & i)) = "", 0, dtRoom.Rows(2).Item("R" & i)))
+                    rs.Fields("Mori").Value = dtRoom.Rows(4).Item("R" & i)
+                    rs.Fields("Id2").Value = If(Util.checkDBNullValue(dtRoom.Rows(4).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(5).Item("R" & i)) = "", 0, dtRoom.Rows(5).Item("R" & i)))
+                    rs.Fields("Hosi").Value = dtRoom.Rows(7).Item("R" & i)
+                    rs.Fields("Id3").Value = If(Util.checkDBNullValue(dtRoom.Rows(7).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(8).Item("R" & i)) = "", 0, dtRoom.Rows(8).Item("R" & i)))
+                    rs.Fields("Tuki").Value = dtRoom.Rows(10).Item("R" & i)
+                    rs.Fields("Id4").Value = If(Util.checkDBNullValue(dtRoom.Rows(10).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(11).Item("R" & i)) = "", 0, dtRoom.Rows(11).Item("R" & i)))
+                    rs.Fields("Hana").Value = dtRoom.Rows(13).Item("R" & i)
+                    rs.Fields("Id5").Value = If(Util.checkDBNullValue(dtRoom.Rows(13).Item("R" & i)) = "", 0, If(Util.checkDBNullValue(dtRoom.Rows(14).Item("R" & i)) = "", 0, dtRoom.Rows(14).Item("R" & i)))
+                    rs.Fields("Ymd").Value = ymd
+                    If i <> 12 Then
+                        rs.MoveNext()
+                    End If
+                Next
+                rs.Update()
+                cnn.Close()
+
+                '再表示
+                clearText()
+                displayDgvRoom()
+            End If
+        End If
 
     End Sub
 

@@ -10,12 +10,15 @@
         If code = Keys.Enter Then
             If processFlg = False Then
                 processFlg = True
-                Return False
+                Return True
             Else
                 processFlg = False
                 Me.BeginEdit(False)
-                Return False
+                Return True
             End If
+        ElseIf code = Keys.Back Then
+            Me.BeginEdit(False)
+            Return True
         Else
             Return MyBase.ProcessKeyEventArgs(m)
         End If
@@ -33,7 +36,6 @@
 
     Private Sub ExDataGridView_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles Me.EditingControlShowing
         editTextBox = CType(e.Control, DataGridViewTextBoxEditingControl)
-        editTextBox.ImeMode = Windows.Forms.ImeMode.Hiragana
 
         'イベントハンドラを削除、追加
         RemoveHandler editTextBox.PreviewKeyDown, AddressOf dataGridViewTextBox_PreviewKeyDown
