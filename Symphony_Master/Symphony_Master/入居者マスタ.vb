@@ -1,17 +1,10 @@
 ﻿Imports System.Data.OleDb
 
+''' <summary>
+''' 入居者マスタクラス
+''' </summary>
+''' <remarks></remarks>
 Public Class 入居者マスタ
-    Public Sub New()
-        InitializeComponent()
-
-        Me.KeyPreview = True
-
-        Me.StartPosition = FormStartPosition.CenterScreen
-        Me.MinimizeBox = False
-        Me.MaximizeBox = False
-        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-    End Sub
-
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     Public Class dgvRowHeaderCell
 
@@ -32,6 +25,27 @@ Public Class 入居者マスタ
 
     End Class
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub New()
+        InitializeComponent()
+
+        Me.KeyPreview = True
+
+        Me.StartPosition = FormStartPosition.CenterScreen
+        Me.MinimizeBox = False
+        Me.MaximizeBox = False
+        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+    End Sub
+
+    ''' <summary>
+    ''' 入居者マスタloadイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub 入居者マスタ_Load(sender As Object, e As System.EventArgs) Handles Me.Load
         'テキストボックス設定
         settingTextBox()
@@ -55,6 +69,10 @@ Public Class 入居者マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgv表示
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub displayResident()
         clearInputText()
         dgvResident.DataSource = Nothing
@@ -73,6 +91,10 @@ Public Class 入居者マスタ
         idBox.Focus()
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgv初期設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvResident()
         'DoubleBufferedプロパティをTrue
         Util.EnableDoubleBuffering(dgvResident)
@@ -104,6 +126,10 @@ Public Class 入居者マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgv列、行設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvResidentColumn()
         With dgvResident
             '並び替えができないようにする
@@ -144,6 +170,10 @@ Public Class 入居者マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 入力テキストボックス設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingTextBox()
         'ID
         idBox.ImeMode = Windows.Forms.ImeMode.Disable
@@ -168,6 +198,10 @@ Public Class 入居者マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 入力テキストクリア
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub clearInputText()
         sortBox.Text = ""
         idBox.Text = ""
@@ -178,7 +212,14 @@ Public Class 入居者マスタ
         displayCheckBox.Checked = True
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgvセルフォーマットイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvResident_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvResident.CellFormatting
+        '表示列の値表示変更
         If dgvResident.Columns(e.ColumnIndex).Name = "Dsp" Then
             Dim cellVal As String = Util.checkDBNullValue(e.Value)
             If cellVal = "1" Then
@@ -190,6 +231,12 @@ Public Class 入居者マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgvセルマウスクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvResident_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvResident.CellMouseClick
         If e.RowIndex >= 0 Then
             Dim id As String = Util.checkDBNullValue(dgvResident("Id", e.RowIndex).Value)
@@ -233,6 +280,12 @@ Public Class 入居者マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 並び替えボックスSelectedValueChangedイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub sortBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles sortBox.SelectedValueChanged
         Dim targetColumn As DataGridViewColumn
         Dim selectedText As String = sortBox.Text
@@ -251,6 +304,12 @@ Public Class 入居者マスタ
         dgvResident.CurrentCell.Selected = False
     End Sub
 
+    ''' <summary>
+    ''' 登録ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
         If id = -1 Then
@@ -315,6 +374,12 @@ Public Class 入居者マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 削除ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
         Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
         If id = -1 Then

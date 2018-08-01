@@ -1,5 +1,9 @@
 ﻿Imports System.Data.OleDb
 
+''' <summary>
+''' 居室マスタクラス
+''' </summary>
+''' <remarks></remarks>
 Public Class 居室マスタ
 
     '各家の部屋番号の行のセルスタイル
@@ -29,6 +33,10 @@ Public Class 居室マスタ
     '選択入居者ID保持用
     Private residentId As Integer = 0
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub New()
 
         InitializeComponent()
@@ -45,6 +53,12 @@ Public Class 居室マスタ
         Me.Dispose()
     End Sub
 
+    ''' <summary>
+    ''' 居室マスタloadイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub 居室マスタ_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'セルスタイル作成
         createCellStyle()
@@ -61,6 +75,10 @@ Public Class 居室マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 入居者リスト表示
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub displayDgvUser()
         Dim cnn As New ADODB.Connection
         Dim rs As New ADODB.Recordset
@@ -77,6 +95,10 @@ Public Class 居室マスタ
         dgvUser.CurrentRow.Selected = False
     End Sub
 
+    ''' <summary>
+    ''' 居室dgv表示
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub displayDgvRoom()
         Dim cnn As New ADODB.Connection
         Dim rs As New ADODB.Recordset
@@ -109,6 +131,10 @@ Public Class 居室マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' セルスタイル作成
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub createCellStyle()
         '各家の部屋番号行のセルスタイル
         Dim skyRowCellStyle, forestRowCellStyle, starRowCellStyle, moonRowCellStyle, flowerRowCellStyle As DataGridViewCellStyle
@@ -165,6 +191,10 @@ Public Class 居室マスタ
         nameRowCellStyle.Font = New Font("MS UI Gothic", 8)
     End Sub
 
+    ''' <summary>
+    ''' 居室dgvのテキストを空にする
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub clearText()
         'dgvの名前、IDを空にする
         For i As Integer = 0 To 14
@@ -183,6 +213,10 @@ Public Class 居室マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 居室dgv初期設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub initDgvRoom()
         'dgv設定
         settingDgvRoom()
@@ -232,6 +266,10 @@ Public Class 居室マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgv設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvUser()
         'DoubleBufferedプロパティをTrue
         Util.EnableDoubleBuffering(dgvUser)
@@ -255,6 +293,10 @@ Public Class 居室マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 居室dgv設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvRoom()
         'DoubleBufferedプロパティをTrue
         Util.EnableDoubleBuffering(dgvRoom)
@@ -278,6 +320,10 @@ Public Class 居室マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgv幅、スタイル設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvUserColumn()
         With dgvUser
             '非表示列
@@ -291,6 +337,10 @@ Public Class 居室マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 居室dgv幅、スタイル設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvRoomColumn()
         With dgvRoom
             With .Columns("House")
@@ -324,6 +374,12 @@ Public Class 居室マスタ
         Next
     End Sub
 
+    ''' <summary>
+    ''' 居室マスタセルマウスクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvRoom_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvRoom.CellMouseClick
         If e.RowIndex Mod 3 = 1 Then
             If residentName = "" Then
@@ -348,10 +404,22 @@ Public Class 居室マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' クリアボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub btnClear_Click(sender As System.Object, e As System.EventArgs) Handles btnClear.Click
         clearText()
     End Sub
 
+    ''' <summary>
+    ''' 登録ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         Dim cnn As New ADODB.Connection
         Dim rs As New ADODB.Recordset
@@ -436,6 +504,12 @@ Public Class 居室マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 入居者dgvセルマウスクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvUser_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUser.CellMouseClick
         If e.RowIndex >= 0 Then
             residentName = Util.checkDBNullValue(dgvUser("Nam", e.RowIndex).Value)

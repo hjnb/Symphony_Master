@@ -1,7 +1,15 @@
 ﻿Imports System.Data.OleDb
 
+''' <summary>
+''' 職員マスタクラス
+''' </summary>
+''' <remarks></remarks>
 Public Class 職員マスタ
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub New()
         InitializeComponent()
 
@@ -56,6 +64,10 @@ Public Class 職員マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 職員dgv表示
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub displayStaff()
         clearInputText()
         dgvStaff.DataSource = Nothing
@@ -75,6 +87,10 @@ Public Class 職員マスタ
         idBox.Focus()
     End Sub
 
+    ''' <summary>
+    ''' 職員dgv初期設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvStaff()
         'DoubleBufferedプロパティをTrue
         Util.EnableDoubleBuffering(dgvStaff)
@@ -106,6 +122,10 @@ Public Class 職員マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 職員dgv幅、スタイル設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingDgvStaffColumn()
         With dgvStaff
             '並び替えができないようにする
@@ -160,6 +180,10 @@ Public Class 職員マスタ
         End With
     End Sub
 
+    ''' <summary>
+    ''' 入力テキストボックス設定
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub settingTextBox()
         'ID
         idBox.ImeMode = Windows.Forms.ImeMode.Disable
@@ -187,6 +211,10 @@ Public Class 職員マスタ
 
     End Sub
 
+    ''' <summary>
+    ''' 入力テキストクリア
+    ''' </summary>
+    ''' <remarks></remarks>
     Private Sub clearInputText()
         idBox.Text = ""
         lastnameBox.Text = ""
@@ -201,6 +229,12 @@ Public Class 職員マスタ
         sortBox.Text = ""
     End Sub
 
+    ''' <summary>
+    ''' 並び替えボックスSelectedValueChangedイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub sortBox_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles sortBox.SelectedValueChanged
         Dim targetColumn As DataGridViewColumn
         Dim selectedText As String = sortBox.Text
@@ -223,6 +257,12 @@ Public Class 職員マスタ
         dgvStaff.CurrentCell.Selected = False
     End Sub
 
+    ''' <summary>
+    ''' 職員dgvCellFormattingイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvStaff_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvStaff.CellFormatting
         If dgvStaff.Columns(e.ColumnIndex).Name = "Dsp" OrElse dgvStaff.Columns(e.ColumnIndex).Name = "Zai" Then
             Dim cellVal As String = Util.checkDBNullValue(e.Value)
@@ -241,6 +281,12 @@ Public Class 職員マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 職員dgvセルマウスクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub dgvStaff_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvStaff.CellMouseClick
         If e.RowIndex >= 0 Then
             Dim id As String = Util.checkDBNullValue(dgvStaff("Id", e.RowIndex).Value)
@@ -289,6 +335,12 @@ Public Class 職員マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 登録ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
         If id = -1 Then
@@ -370,6 +422,12 @@ Public Class 職員マスタ
         End If
     End Sub
 
+    ''' <summary>
+    ''' 削除ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
         Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
         If id = -1 Then

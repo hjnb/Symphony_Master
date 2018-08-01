@@ -18,6 +18,121 @@ Symphony_Master
 	<param name="dgvCellValue"></param>
 	<returns></returns>
 	<remarks></remarks>
+</member><member name="M:Symphony_Master.TopForm.#ctor">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.TopForm.TopForm_Load(System.Object,System.EventArgs)">
+	<summary>
+ トップフォームloadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.TopForm.residentBtn_Click(System.Object,System.EventArgs)">
+	<summary>
+ 入居者ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.TopForm.staffBtn_Click(System.Object,System.EventArgs)">
+	<summary>
+ 職員ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.TopForm.roomBtn_Click(System.Object,System.EventArgs)">
+	<summary>
+ 居室ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.TopForm.exitBtn_Click(System.Object,System.EventArgs)">
+	<summary>
+ 終了ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="T:Symphony_Master.TopForm">
+	<summary>
+ トップフォームクラス
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.#ctor">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.displayStaff">
+	<summary>
+ 職員dgv表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.settingDgvStaff">
+	<summary>
+ 職員dgv初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.settingDgvStaffColumn">
+	<summary>
+ 職員dgv幅、スタイル設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.settingTextBox">
+	<summary>
+ 入力テキストボックス設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.clearInputText">
+	<summary>
+ 入力テキストクリア
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.sortBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 並び替えボックスSelectedValueChangedイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.dgvStaff_CellFormatting(System.Object,System.Windows.Forms.DataGridViewCellFormattingEventArgs)">
+	<summary>
+ 職員dgvCellFormattingイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.dgvStaff_CellMouseClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ 職員dgvセルマウスクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.職員マスタ.btnDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 削除ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="T:Symphony_Master.職員マスタ">
+	<summary>
+ 職員マスタクラス
+ </summary>
+	<remarks></remarks>
 </member><member name="P:Symphony_Master.My.Resources.Resources.ResourceManager">
 	<summary>
   Returns the cached ResourceManager instance used by this class.
@@ -31,6 +146,178 @@ Symphony_Master
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="M:Symphony_Master.居室マスタ.#ctor">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.居室マスタ_Load(System.Object,System.EventArgs)">
+	<summary>
+ 居室マスタloadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.displayDgvUser">
+	<summary>
+ 入居者リスト表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.displayDgvRoom">
+	<summary>
+ 居室dgv表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.createCellStyle">
+	<summary>
+ セルスタイル作成
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.clearText">
+	<summary>
+ 居室dgvのテキストを空にする
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.initDgvRoom">
+	<summary>
+ 居室dgv初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.settingDgvUser">
+	<summary>
+ 入居者dgv設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.settingDgvRoom">
+	<summary>
+ 居室dgv設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.settingDgvUserColumn">
+	<summary>
+ 入居者dgv幅、スタイル設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.settingDgvRoomColumn">
+	<summary>
+ 居室dgv幅、スタイル設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.dgvRoom_CellMouseClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ 居室マスタセルマウスクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.btnClear_Click(System.Object,System.EventArgs)">
+	<summary>
+ クリアボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.居室マスタ.dgvUser_CellMouseClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ 入居者dgvセルマウスクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="T:Symphony_Master.居室マスタ">
+	<summary>
+ 居室マスタクラス
+ </summary>
+	<remarks></remarks>
+</member><member name="T:Symphony_Master.passForm">
+	<summary>
+ パスワードフォームクラス
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.#ctor">
+	<summary>
+ コンストラクタ
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.入居者マスタ_Load(System.Object,System.EventArgs)">
+	<summary>
+ 入居者マスタloadイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.displayResident">
+	<summary>
+ 入居者dgv表示
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.settingDgvResident">
+	<summary>
+ 入居者dgv初期設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.settingDgvResidentColumn">
+	<summary>
+ 入居者dgv列、行設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.settingTextBox">
+	<summary>
+ 入力テキストボックス設定
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.clearInputText">
+	<summary>
+ 入力テキストクリア
+ </summary>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.dgvResident_CellFormatting(System.Object,System.Windows.Forms.DataGridViewCellFormattingEventArgs)">
+	<summary>
+ 入居者dgvセルフォーマットイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.dgvResident_CellMouseClick(System.Object,System.Windows.Forms.DataGridViewCellMouseEventArgs)">
+	<summary>
+ 入居者dgvセルマウスクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.sortBox_SelectedValueChanged(System.Object,System.EventArgs)">
+	<summary>
+ 並び替えボックスSelectedValueChangedイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.btnRegist_Click(System.Object,System.EventArgs)">
+	<summary>
+ 登録ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="M:Symphony_Master.入居者マスタ.btnDelete_Click(System.Object,System.EventArgs)">
+	<summary>
+ 削除ボタンクリックイベント
+ </summary>
+	<param name="sender"></param>
+	<param name="e"></param>
+	<remarks></remarks>
+</member><member name="T:Symphony_Master.入居者マスタ">
+	<summary>
+ 入居者マスタクラス
+ </summary>
+	<remarks></remarks>
 </member>
 </members>
 </doc>

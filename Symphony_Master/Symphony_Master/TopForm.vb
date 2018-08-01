@@ -1,4 +1,8 @@
-﻿Public Class TopForm
+﻿''' <summary>
+''' トップフォームクラス
+''' </summary>
+''' <remarks></remarks>
+Public Class TopForm
 
     'データベースのパス
     Public dbFilePath As String = My.Application.Info.DirectoryPath & "\MstrMngr.mdb"
@@ -10,6 +14,10 @@
     Private roomForm As 居室マスタ
     Private passForm As passForm
 
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub New()
         InitializeComponent()
         Me.StartPosition = FormStartPosition.CenterScreen
@@ -17,6 +25,12 @@
         Me.MaximizeBox = False
     End Sub
 
+    ''' <summary>
+    ''' トップフォームloadイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub TopForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'データベースファイルの存在チェック
         If Not System.IO.File.Exists(dbFilePath) Then
@@ -26,6 +40,12 @@
         End If
     End Sub
 
+    ''' <summary>
+    ''' 入居者ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub residentBtn_Click(sender As System.Object, e As System.EventArgs) Handles residentBtn.Click
         If IsNothing(residentForm) OrElse residentForm.IsDisposed Then
             residentForm = New 入居者マスタ()
@@ -34,6 +54,12 @@
         End If
     End Sub
 
+    ''' <summary>
+    ''' 職員ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub staffBtn_Click(sender As System.Object, e As System.EventArgs) Handles staffBtn.Click
         If IsNothing(passForm) OrElse passForm.IsDisposed Then
             passForm = New passForm()
@@ -48,6 +74,12 @@
         End If
     End Sub
 
+    ''' <summary>
+    ''' 居室ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub roomBtn_Click(sender As System.Object, e As System.EventArgs) Handles roomBtn.Click
         If IsNothing(roomForm) OrElse roomForm.IsDisposed Then
             roomForm = New 居室マスタ()
@@ -56,6 +88,12 @@
         End If
     End Sub
 
+    ''' <summary>
+    ''' 終了ボタンクリックイベント
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    ''' <remarks></remarks>
     Private Sub exitBtn_Click(sender As System.Object, e As System.EventArgs) Handles exitBtn.Click
         Me.Close()
     End Sub

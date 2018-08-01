@@ -1,4 +1,8 @@
-﻿Public Class passForm
+﻿''' <summary>
+''' パスワードフォームクラス
+''' </summary>
+''' <remarks></remarks>
+Public Class passForm
 
     Public Sub New()
         InitializeComponent()
@@ -14,8 +18,8 @@
     End Sub
 
     Private Sub okBtn_Click(sender As System.Object, e As System.EventArgs) Handles okBtn.Click
-        Dim inputPass As String = passBox.Text
-        Dim truePass As String = (Today.Month + Today.Day).ToString()
+        Dim inputPass As String = passBox.Text '入力パスワード
+        Dim truePass As String = (Today.Month + Today.Day).ToString() '月と日の数の合計
         If inputPass = truePass Then
             Me.DialogResult = Windows.Forms.DialogResult.OK
             Me.Close()
