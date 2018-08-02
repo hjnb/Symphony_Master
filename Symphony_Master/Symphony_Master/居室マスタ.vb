@@ -381,7 +381,7 @@ Public Class 居室マスタ
     ''' <param name="e"></param>
     ''' <remarks></remarks>
     Private Sub dgvRoom_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvRoom.CellMouseClick
-        If e.RowIndex Mod 3 = 1 Then
+        If e.RowIndex Mod 3 = 1 AndAlso e.ColumnIndex > 0 Then
             If residentName = "" Then
                 Return
             End If
