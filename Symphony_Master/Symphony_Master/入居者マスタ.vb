@@ -314,27 +314,32 @@ Public Class 入居者マスタ
         Dim id As Integer = If(IsNumeric(idBox.Text) AndAlso CInt(idBox.Text) > 0, CInt(idBox.Text), -1) 'ID
         If id = -1 Then
             MsgBox("IDは1以上の数値で指定して下さい。")
+            idBox.Focus()
             Return
         End If
         Dim lastname As String = lastnameBox.Text '姓
         If lastname = "" Then
             MsgBox("漢字（姓）を入力して下さい。")
+            lastnameBox.Focus()
             Return
         End If
         Dim firstname As String = firstnameBox.Text '名
         If firstname = "" Then
             MsgBox("漢字（名）を入力して下さい。")
+            firstnameBox.Focus()
             Return
         End If
         Dim nam As String = lastname & " " & firstname '名前
         Dim kana As String = kanaBox.Text 'フリガナ
         If kana = "" Then
             MsgBox("フリガナを入力して下さい。")
+            kanaBox.Focus()
             Return
         End If
         Dim unit As String = unitBox.Text
         If unit = "" Then
             MsgBox("ユニットを選択して下さい。")
+            unitBox.Focus()
             Return
         End If
         Dim dsp As Integer = If(displayCheckBox.Checked, 1, 0) '表示
