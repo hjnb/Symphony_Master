@@ -169,13 +169,13 @@ Public Class 職員マスタ
                 .HeaderText = "在職"
                 .Width = 35
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                .HeaderCell.Style.Font = New Font("", 8.5)
+                .HeaderCell.Style.Font = New Font("", 7.5)
             End With
             With .Columns("Dsp")
                 .HeaderText = "表示"
                 .Width = 35
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                .HeaderCell.Style.Font = New Font("", 8.5)
+                .HeaderCell.Style.Font = New Font("", 7.5)
             End With
         End With
     End Sub

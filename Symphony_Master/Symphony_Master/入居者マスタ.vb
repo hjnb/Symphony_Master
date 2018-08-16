@@ -165,7 +165,7 @@ Public Class 入居者マスタ
                 .HeaderText = "表示"
                 .Width = 33
                 .DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-                .HeaderCell.Style.Font = New Font("", 8)
+                .HeaderCell.Style.Font = New Font("", 7.5)
             End With
         End With
     End Sub
